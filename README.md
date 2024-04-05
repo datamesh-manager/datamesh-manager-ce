@@ -1,6 +1,6 @@
 # Data Mesh Manager (Community Edition)
 
-The [Data Mesh Manager](https://www.datamesh-manager.com) (Community Edition) is a free version of the Data Mesh Manager that you can host yourself.
+Data Mesh Manager (Community Edition) is a free version of the [Data Mesh Manager](https://www.datamesh-manager.com) that you can host yourself.
 
 ## Demo
 
