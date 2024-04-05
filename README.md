@@ -1,22 +1,25 @@
-# datamesh-manager-ce
+# Data Mesh Manager (community edition)
 
-The Community Edition of the Data Mesh Manager.
+The [Data Mesh Manager](https://www.datamesh-manager.com) (community edition) is a free version of the Data Mesh Manager that you can host yourself.
 
-- It's free to use.
-- Everyone is always organization owner.
-- No support for SSO.
-- Only community support in slack.
+## Getting Started
 
-Data Mesh Manager CE is available as a Docker image:
-
-```
-ghcr.io/datamesh-manager/datamesh-manager-ce:latest
-```
-
-We've prepared a `docker-compose.yaml` to get you set up.
+Start the Data Mesh Manager (community edition) locally with Docker Compose.
 
 ```bash
-docker compose up
+git clone https://github.com/datamesh-manager/datamesh-manager-ce.git
+cd datamesh-manager-ce
+docker compose up --detached
 ```
 
+Now you can access the Data Mesh Manager (community edition) at [http://localhost:8081](http://localhost:8081).
 
+## Configuration
+
+The Data Mesh Manager (community edition) uses a Postgres database and a mailserver.
+
+We recommend to configure an external database and mailserver for production use.
+
+## License
+
+TBD
