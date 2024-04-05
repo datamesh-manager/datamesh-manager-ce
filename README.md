@@ -21,9 +21,9 @@ docker compose up --detach
 
 Now you can access the Data Mesh Manager (Community Edition) at [http://localhost:8081](http://localhost:8081).
 
-## Configuration
+> **_NOTE:_**  The Docker Compose configuration uses a dummy mail server, so no mails are actually sent. Configure our SMTP host accordingly as environment variables.
 
-The Data Mesh Manager (Community Edition) uses a Postgres database and a dummy mail server (no mails are actually sent).
+## Configuration
 
 Configure an external database and mail server for production use.
 
