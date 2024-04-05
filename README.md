@@ -9,7 +9,9 @@ Play with our [demo app](https://demo.datamesh-manager.com/)!
 
 ## Getting Started
 
-Start the Data Mesh Manager (Community Edition) locally with Docker Compose.
+Data Mesh Manager (Community Edition) is available as Docker image `datameshmanager/datamesh-manager-ce` on [Docker Hub](https://hub.docker.com/r/datameshmanager/datamesh-manager-ce).
+
+Start Data Mesh Manager (Community Edition) locally with Docker Compose:
 
 ```bash
 git clone https://github.com/datamesh-manager/datamesh-manager-ce.git
