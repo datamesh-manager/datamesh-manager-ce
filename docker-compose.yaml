@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  app:
+    image: ghcr.io/datamesh-manager/datamesh-manager-ce:latest
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_MAIL_HOST=mailhog
+      - SPRING_MAIL_PORT=1025
+      # - DATAMESHMANAGER_SUPERADMINS=mail@example.com
+    ports:
+      - '8081:8080'
+    depends_on:
+      - postgres
+      - mailhog
+  postgres:
+    image: postgres:14.6
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  mailhog:
+    image: mailhog/mailhog:latest
+    restart: always
+volumes:
+  postgres:
+    driver: local
