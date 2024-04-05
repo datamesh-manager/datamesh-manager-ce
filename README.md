@@ -34,7 +34,7 @@ Configure an external database and mail server for production use.
 | SPRING_DATASOURCE_USERNAME | `postgres`                                 | Login username of the database                                                                                                                                        |
 | SPRING_DATASOURCE_PASSWORD | `postgres`                                 | Login password of the database                                                                                                                                |
 | SPRING_MAIL_HOST           | `smtp.example.com`                         | SMTP server host                                                                                                                                                       |
-| SPRING_MAIL_PORT           | `587`                                      | SMTP server port.                                                                                                                                                     |
+| SPRING_MAIL_PORT           | `587`                                      | SMTP server port                                                                                                                                                     |
 | SPRING_MAIL_USERNAME       |                                          | Login user of the SMTP server |
 | SPRING_MAIL_PASSWORD       |                                          | Login password of the SMTP server                                                                                                                             |
 
