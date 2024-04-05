@@ -29,6 +29,8 @@ Configure an external database and mail server for production use.
 
 | Environment Variable       | Example                                  | Description                                                                                                                                                            |
 | -------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DATAMESHMANAGER_HOST      | http://localhost:8081 | The host of the application                                                                                                                                              |
+
 | SPRING_DATASOURCE_URL      | jdbc:postgresql://postgres:5432/postgres | JDBC URL of the database                                                                                                                                              |
 | SPRING_DATASOURCE_USERNAME | postgres                                 | Login username of the database                                                                                                                                        |
 | SPRING_DATASOURCE_PASSWORD | postgres                                 | Login password of the database                                                                                                                                |
