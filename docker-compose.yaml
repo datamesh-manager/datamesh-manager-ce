@@ -4,6 +4,7 @@ services:
     image: datameshmanager/datamesh-manager-ce:latest
     restart: always
     environment:
+      - DATAMESHMANAGER_HOST=http://localhost:8081
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
