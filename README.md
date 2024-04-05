@@ -2,6 +2,11 @@
 
 The [Data Mesh Manager](https://www.datamesh-manager.com) (Community Edition) is a free version of the Data Mesh Manager that you can host yourself.
 
+## Demo
+
+Play with our [demo app](https://demo.datamesh-manager.com/)!
+
+
 ## Getting Started
 
 Start the Data Mesh Manager (Community Edition) locally with Docker Compose.
@@ -16,7 +21,7 @@ Now you can access the Data Mesh Manager (Community Edition) at [http://localhos
 
 ## Configuration
 
-The Data Mesh Manager (community edition) uses a Postgres database and a dummy mail server (no mails are actually sent).
+The Data Mesh Manager (Community Edition) uses a Postgres database and a dummy mail server (no mails are actually sent).
 
 Configure an external database and mail server for production use.
 
