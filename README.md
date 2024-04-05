@@ -9,7 +9,7 @@ Start the Data Mesh Manager (community edition) locally with Docker Compose.
 ```bash
 git clone https://github.com/datamesh-manager/datamesh-manager-ce.git
 cd datamesh-manager-ce
-docker compose up --detached
+docker compose up --detach
 ```
 
 Now you can access the Data Mesh Manager (community edition) at [http://localhost:8081](http://localhost:8081).
