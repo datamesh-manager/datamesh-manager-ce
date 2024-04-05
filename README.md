@@ -22,13 +22,13 @@ Configure an external database and mail server for production use.
 
 | Environment Variable       | Example                                  | Description                                                                                                                                                            |
 | -------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SPRING_DATASOURCE_URL      | jdbc:postgresql://postgres:5432/postgres | JDBC URL of the database.                                                                                                                                              |
-| SPRING_DATASOURCE_USERNAME | postgres                                 | Login username of the database.                                                                                                                                        |
-| SPRING_DATASOURCE_PASSWORD | postgres                                 | Login password of the database.<br>                                                                                                                                    |
+| SPRING_DATASOURCE_URL      | jdbc:postgresql://postgres:5432/postgres | JDBC URL of the database                                                                                                                                              |
+| SPRING_DATASOURCE_USERNAME | postgres                                 | Login username of the database                                                                                                                                        |
+| SPRING_DATASOURCE_PASSWORD | postgres                                 | Login password of the database                                                                                                                                |
 | SPRING_MAIL_HOST           | smtp.example.com                         | SMTP server host                                                                                                                                                       |
-| SPRING_MAIL_PORT           | 587                                      | SMTP server port.                                                                                                                                                      |
-| SPRING_MAIL_USERNAME       |                                          | Login user of the SMTP server.<br>Login user of the SMTP server.<br>Login user of the SMTP server.<br>Login user of the SMTP server.<br>Login user of the SMTP server. |
-| SPRING_MAIL_PASSWORD       |                                          | Login password of the SMTP server.<br>                                                                                                                                 |
+| SPRING_MAIL_PORT           | 587                                      | SMTP server port.                                                                                                                                                     |
+| SPRING_MAIL_USERNAME       |                                          | Login user of the SMTP server |
+| SPRING_MAIL_PASSWORD       |                                          | Login password of the SMTP server                                                                                                                             |
 
 ## Reporting bugs and feature requests
 
