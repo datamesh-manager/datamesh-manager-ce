@@ -20,6 +20,10 @@ The Data Mesh Manager (community edition) uses a Postgres database and a mailser
 
 We recommend to configure an external database and mailserver for production use.
 
+## Reporting bugs and feature requests
+
+Want to report a bug or request a feature? Open an [issue](https://github.com/datamesh-manager/datamesh-manager-ce/issues/new).
+
 ## License
 
 TBD
