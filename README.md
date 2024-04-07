@@ -2,6 +2,9 @@
 
 Data Mesh Manager (Community Edition) is a free version of the [Data Mesh Manager](https://www.datamesh-manager.com) that you can host yourself.
 
+In the Community Edition, every user can change any data product or data contract.  
+If you need advanced role and permission management, SSO, or customizations, consider the [Enterprise Edition](https://www.datamesh-manager.com/#pricing).
+
 ## Demo
 
 Play with our [demo app](https://demo.datamesh-manager.com/)!
