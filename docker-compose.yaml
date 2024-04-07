@@ -24,8 +24,12 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
   mailhog:
+    # Test SMTP server, does not actually send mails
+    # View messages in the web UI http://localhost:8025
     image: mailhog/mailhog:latest
     restart: always
+    ports:
+      - "8025:8025"
 volumes:
   postgres:
     driver: local
