@@ -47,4 +47,4 @@ Want to report a bug or request a feature? Open an [issue](https://github.com/da
 
 ## License
 
-TBD
+The Data Mesh Manager (Community Edition), being made available as a Docker image, is licensed under the [Community License](https://www.datamesh-manager.com/COMMUNITY-LICENSE.txt).
