@@ -1,0 +1,10 @@
+apiVersion: v1
+name: datamesh-manager-ce
+version: 1.0.0
+appVersion: v1.0
+home: https://www.datamesh-manager.com/
+description: t.b.d.
+keywords:
+  - data-mesh-manager
+sources:
+  - https://github.com/datamesh-manager/datamesh-manager-ce

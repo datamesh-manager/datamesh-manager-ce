@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datamesh-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datamesh-manager
+  template:
+    metadata:
+      name: datamesh-manager
+      labels:
+        app: datamesh-manager
+    spec:
+      containers:
+        - name: datamesh-manager
+          image: datameshmanager/datamesh-manager-ce:latest # TODO: make configurable via values.yaml
+          ports:
+          - containerPort: 8080
+          env:
+          - name: DATAMESHMANAGER_HOST
+            value: http://localhost:8080 # TODO: make configurable via values.yaml
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:postgresql://postgres:5432/postgres
+          - name: SPRING_DATASOURCE_USERNAME
+            value: postgres # TODO: make configurable via values.yaml
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: postgres # TODO: make configurable via values.yaml
+          - name: SPRING_MAIL_HOST
+            value: mailhog
+          - name: SPRING_MAIL_PORT
+            value: "1025"

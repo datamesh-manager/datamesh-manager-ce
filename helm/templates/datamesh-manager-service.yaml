@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: datamesh-manager
+spec:
+  type: LoadBalancer # TODO: make configurable via values.yaml
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    app: datamesh-manager
