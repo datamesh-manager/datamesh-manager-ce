@@ -1,0 +1,46 @@
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+  tag: latest
+
+datameshmanager:
+  host: ""
+
+database:
+  url: jdbc:postgresql://localhost:5432/postgres
+  secretName: datamesh-manager-database # create secret beforehand
+  usernameKey: username
+  passwordKey: password
+
+smtp:
+  host: smtp.example.com
+  port: "1025"
+  secretName: datamesh-manager-smtp # create secret beforehand
+  usernameKey: username
+  passwordKey: password
+
+resources: {
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+}
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: 8080
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: 8080
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
