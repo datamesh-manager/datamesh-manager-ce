@@ -12,7 +12,7 @@ Play with our [demo app](https://demo.datamesh-manager.com/)!
 
 ## Getting Started
 
-Data Mesh Manager (Community Edition) is available as Docker image `datameshmanager/datamesh-manager-ce` on [Docker Hub](https://hub.docker.com/r/datameshmanager/datamesh-manager-ce).
+Data Mesh Manager (Community Edition) is available as container image `datameshmanager/datamesh-manager-ce` on [Docker Hub](https://hub.docker.com/r/datameshmanager/datamesh-manager-ce).
 
 Start Data Mesh Manager (Community Edition) locally with Docker Compose:
 
@@ -40,6 +40,10 @@ Configure an external database and mail server for production use.
 | SPRING_MAIL_PORT           | `587`                                      | SMTP server port                                                                                                                                                     |
 | SPRING_MAIL_USERNAME       |                                          | Login user of the SMTP server |
 | SPRING_MAIL_PASSWORD       |                                          | Login password of the SMTP server                                                                                                                             |
+
+## Deployment
+
+You may want to use the provided [helm chart](./helm) for Kubernetes Deployments.
 
 ## Reporting bugs and feature requests
 
