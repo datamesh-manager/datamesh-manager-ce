@@ -40,6 +40,8 @@ Configure an external database and mail server for production use.
 | SPRING_MAIL_PORT           | `587`                                      | SMTP server port                                                                                                                                                     |
 | SPRING_MAIL_USERNAME       |                                          | Login user of the SMTP server |
 | SPRING_MAIL_PASSWORD       |                                          | Login password of the SMTP server                                                                                                                             |
+| SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH | `true` | Use basic authentication for SMTP |
+| SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE | `true` | Ensure that TLS is used |
 
 ## Reporting bugs and feature requests
 
