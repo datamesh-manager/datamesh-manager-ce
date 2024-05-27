@@ -42,6 +42,7 @@ Configure an external database and mail server for production use.
 | SPRING_MAIL_PASSWORD       |                                          | Login password of the SMTP server                                                                                                                             |
 | SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH | `true` | Use basic authentication for SMTP |
 | SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE | `true` | Ensure that TLS is used |
+| DATAMESHMANAGER_MAIL_FROM      | `Data Mesh Manager <noreply@example.com>` | The sender email address for data mesh manager emails.                                                                                                                                              |
 
 ## Reporting bugs and feature requests
 
