@@ -5,6 +5,8 @@ Data Mesh Manager (Community Edition) is a free version of the [Data Mesh Manage
 In the Community Edition, every user can change any data product or data contract.  
 If you need advanced role and permission management, SSO, or customizations, consider the [Enterprise Edition](https://www.datamesh-manager.com/#pricing).
 
+Community support is offered [in Slack in the channel #datamesh-manager](https://datacontract.com/slack).
+
 ## Demo
 
 Play with our [demo app](https://demo.datamesh-manager.com/)!
@@ -44,7 +46,9 @@ Configure an external database and mail server for production use.
 | SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE | `true` | Ensure that TLS is used |
 | DATAMESHMANAGER_MAIL_FROM      | `Data Mesh Manager <noreply@example.com>` | The sender email address for data mesh manager emails.                                                                                                                                              |
 
-## Reporting bugs and feature requests
+## Get help, reporting bugs and feature requests
+
+Community support is offered [in Slack in the channel #datamesh-manager](https://datacontract.com/slack).
 
 Want to report a bug or request a feature? Open an [issue](https://github.com/datamesh-manager/datamesh-manager-ce/issues/new).
 
