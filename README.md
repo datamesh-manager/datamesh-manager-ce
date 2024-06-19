@@ -48,10 +48,7 @@ Configure an external database and mail server for production use.
 
 ## Hosting on Azure
 
-On Azure, we recommend hosting the Data Mesh Manager as a "Azure Container App" (at least 4 GB RAM), the database via "Azure Database for PostgreSQL", and configure SMTP to your email server. Here's an image on how to set it up:
-
-![image](https://github.com/datamesh-manager/datamesh-manager-ce/assets/375693/32e8a2d3-9a80-44f0-bf46-72a274223d7f)
-
+On Azure, we recommend hosting the Data Mesh Manager as a "Azure Container App" (at least 4 GB RAM), the database via "Azure Database for PostgreSQL", and configure SMTP to your email server.
 
 ## Get help, reporting bugs and feature requests
 
