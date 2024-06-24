@@ -1,0 +1,410 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.28.1.47646",
+      "templateHash": "13094569204602842496"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "webAppName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the web app. This will also be used for the default domain name ${webAppName}.azurewebsites.net, so it must be unique."
+      }
+    },
+    "smtpHost": {
+      "type": "string",
+      "metadata": {
+        "description": "SMTP server host"
+      }
+    },
+    "smtpPort": {
+      "type": "string",
+      "metadata": {
+        "description": "SMTP server port"
+      }
+    },
+    "smtpUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Login user of the SMTP server"
+      }
+    },
+    "smtpPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Login password of the SMTP server"
+      }
+    },
+    "smtpBasicAuth": {
+      "type": "string",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Use basic authentication for SMTP"
+      }
+    },
+    "smtpStarttls": {
+      "type": "string",
+      "defaultValue": "true",
+      "metadata": {
+        "description": "Ensure that TLS is used"
+      }
+    },
+    "containerImageUrl": {
+      "type": "string",
+      "defaultValue": "datameshmanager/datamesh-manager-ce:latest",
+      "metadata": {
+        "description": "The Docker container image URL."
+      }
+    },
+    "appServicePlanSku": {
+      "type": "string",
+      "defaultValue": "P1v2",
+      "metadata": {
+        "description": "App Service plan pricing tier. Should have 4 GB."
+      }
+    },
+    "postgresComputeTierSizeSku": {
+      "type": "string",
+      "defaultValue": "Standard_D2s_v3",
+      "metadata": {
+        "description": "Postgres compute tier size"
+      }
+    },
+    "postgresStorageSizeGB": {
+      "type": "int",
+      "defaultValue": 128,
+      "metadata": {
+        "description": "Postgres storge size in GB. Min 128 GB."
+      }
+    },
+    "postgresServerName": {
+      "type": "string",
+      "defaultValue": "datameshmanager-postgres",
+      "metadata": {
+        "description": "The name of the PostgreSQL server."
+      }
+    },
+    "postgresAdminUsername": {
+      "type": "string",
+      "defaultValue": "adminuser",
+      "metadata": {
+        "description": "The administrator username of the PostgreSQL server."
+      }
+    },
+    "postgresAdminPassword": {
+      "type": "securestring",
+      "defaultValue": "[newGuid()]",
+      "metadata": {
+        "description": "The administrator password of the PostgreSQL server."
+      }
+    },
+    "databaseName": {
+      "type": "string",
+      "defaultValue": "postgres",
+      "metadata": {
+        "description": "The database name."
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "datameshmanager-vnet",
+      "metadata": {
+        "description": "The virtual network name."
+      }
+    },
+    "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/16",
+      "metadata": {
+        "description": "The address prefix for the virtual network."
+      }
+    },
+    "webappSubnetName": {
+      "type": "string",
+      "defaultValue": "webapp-subnet",
+      "metadata": {
+        "description": "The subnet name."
+      }
+    },
+    "webappSubnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.1.0/24",
+      "metadata": {
+        "description": "The address prefix for the subnet."
+      }
+    },
+    "postgresSubnetName": {
+      "type": "string",
+      "defaultValue": "postgres-subnet",
+      "metadata": {
+        "description": "The address prefix for the PostgreSQL subnet."
+      }
+    },
+    "postgresSubnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.2.0/24",
+      "metadata": {
+        "description": "The address prefix for the PostgreSQL subnet."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.DBforPostgreSQL/flexibleServers",
+      "apiVersion": "2023-12-01-preview",
+      "name": "[parameters('postgresServerName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('postgresComputeTierSizeSku')]",
+        "tier": "GeneralPurpose"
+      },
+      "properties": {
+        "version": "14",
+        "replica": {
+          "role": "Primary"
+        },
+        "storage": {
+          "iops": 500,
+          "tier": "P10",
+          "storageSizeGB": "[parameters('postgresStorageSizeGB')]",
+          "autoGrow": "Enabled"
+        },
+        "network": {
+          "publicNetworkAccess": "Disabled",
+          "delegatedSubnetResourceId": "[format('{0}/subnets/{1}', resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName')), parameters('postgresSubnetName'))]",
+          "privateDnsZoneArmResourceId": "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.postgres.database.azure.com')]"
+        },
+        "dataEncryption": {
+          "type": "SystemManaged"
+        },
+        "authConfig": {
+          "activeDirectoryAuth": "Disabled",
+          "passwordAuth": "Enabled"
+        },
+        "administratorLogin": "[parameters('postgresAdminUsername')]",
+        "administratorLoginPassword": "[parameters('postgresAdminPassword')]",
+        "availabilityZone": "3",
+        "backup": {
+          "backupRetentionDays": 7,
+          "geoRedundantBackup": "Disabled"
+        },
+        "highAvailability": {
+          "mode": "Disabled"
+        },
+        "maintenanceWindow": {
+          "customWindow": "Disabled",
+          "dayOfWeek": 0,
+          "startHour": 0,
+          "startMinute": 0
+        },
+        "replicationRole": "Primary"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.postgres.database.azure.com')]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-12-01",
+      "name": "[format('{0}-plan', parameters('webAppName'))]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('appServicePlanSku')]"
+      },
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2023-12-01",
+      "name": "[parameters('webAppName')]",
+      "location": "[parameters('location')]",
+      "kind": "app,linux,docker",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', format('{0}-plan', parameters('webAppName')))]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+              "value": "false"
+            },
+            {
+              "name": "DOCKER_REGISTRY_SERVER_URL",
+              "value": "https://index.docker.io"
+            },
+            {
+              "name": "POSTGRES_HOST",
+              "value": "[format('{0}.postgres.database.azure.com', parameters('postgresServerName'))]"
+            },
+            {
+              "name": "POSTGRES_DB",
+              "value": "[parameters('databaseName')]"
+            },
+            {
+              "name": "POSTGRES_USER",
+              "value": "[format('{0}@{1}', parameters('postgresAdminUsername'), parameters('postgresServerName'))]"
+            },
+            {
+              "name": "POSTGRES_PASSWORD",
+              "value": "[parameters('postgresAdminPassword')]"
+            },
+            {
+              "name": "WEBSITES_PORT",
+              "value": "8080"
+            },
+            {
+              "name": "DATAMESHMANAGER_HOST",
+              "value": "${WEBSITE_HOSTNAME}"
+            },
+            {
+              "name": "SPRING_DATASOURCE_URL",
+              "value": "[format('jdbc:postgresql://{0}.postgres.database.azure.com:5432/{1}', parameters('postgresServerName'), parameters('databaseName'))]"
+            },
+            {
+              "name": "SPRING_DATASOURCE_USERNAME",
+              "value": "[parameters('postgresAdminUsername')]"
+            },
+            {
+              "name": "SPRING_DATASOURCE_PASSWORD",
+              "value": "[parameters('postgresAdminPassword')]"
+            },
+            {
+              "name": "SPRING_MAIL_HOST",
+              "value": "[parameters('smtpHost')]"
+            },
+            {
+              "name": "SPRING_MAIL_PORT",
+              "value": "[parameters('smtpPort')]"
+            },
+            {
+              "name": "SPRING_MAIL_USERNAME",
+              "value": "[parameters('smtpUsername')]"
+            },
+            {
+              "name": "SPRING_MAIL_PASSWORD",
+              "value": "[parameters('smtpPassword')]"
+            },
+            {
+              "name": "SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH",
+              "value": "[parameters('smtpBasicAuth')]"
+            },
+            {
+              "name": "SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE",
+              "value": "[parameters('smtpStarttls')]"
+            }
+          ],
+          "linuxFxVersion": "[format('DOCKER|index.docker.io/{0}', parameters('containerImageUrl'))]",
+          "alwaysOn": true,
+          "vnetRouteAllEnabled": true,
+          "ftpsState": "FtpsOnly",
+          "appCommandLine": ""
+        },
+        "virtualNetworkSubnetId": "[format('{0}/subnets/{1}', resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName')), parameters('webappSubnetName'))]",
+        "httpsOnly": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', format('{0}-plan', parameters('webAppName')))]",
+        "[resourceId('Microsoft.DBforPostgreSQL/flexibleServers', parameters('postgresServerName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('vnetName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('webappSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('webappSubnetAddressPrefix')]",
+              "delegations": [
+                {
+                  "name": "dlg-appServices",
+                  "properties": {
+                    "serviceName": "Microsoft.Web/serverfarms"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "[parameters('postgresSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('postgresSubnetAddressPrefix')]",
+              "delegations": [
+                {
+                  "name": "dlg-postgres",
+                  "properties": {
+                    "serviceName": "Microsoft.DBforPostgreSQL/flexibleServers"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/virtualNetworkConnections",
+      "apiVersion": "2023-12-01",
+      "name": "[format('{0}/{1}', parameters('webAppName'), format('{0}vnet', parameters('webAppName')))]",
+      "properties": {
+        "vnetResourceId": "[format('{0}/subnets/{1}', resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName')), parameters('webappSubnetName'))]",
+        "isSwift": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+        "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateDnsZones",
+      "apiVersion": "2020-06-01",
+      "name": "privatelink.postgres.database.azure.com",
+      "location": "global",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}/{1}', 'privatelink.postgres.database.azure.com', format('{0}-dblink', 'privatelink.postgres.database.azure.com'))]",
+      "location": "global",
+      "properties": {
+        "registrationEnabled": false,
+        "virtualNetwork": {
+          "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.postgres.database.azure.com')]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "webAppUrl": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Web/sites', parameters('webAppName')), '2023-12-01').defaultHostName]"
+    }
+  }
+}

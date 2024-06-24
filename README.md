@@ -46,9 +46,13 @@ Configure an external database and mail server for production use.
 | SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE | `true` | Ensure that TLS is used |
 | DATAMESHMANAGER_MAIL_FROM      | `Data Mesh Manager <noreply@example.com>` | The sender email address for data mesh manager emails.                                                                                                                                              |
 
-## Hosting on Azure
+## Deploy on Azure
 
-On Azure, we recommend hosting the Data Mesh Manager as a "Azure Container App" (at least 4 GB RAM), the database via "Azure Database for PostgreSQL", and configure SMTP to your email server.
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdatamesh-manager%2Fdatamesh-manager-ce%2Fmain%2Fazure%2Fdatamesh-manager-ce.json)
+
+Use the Azure Resource Manager [template](azure/datamesh-manager-ce.json) to deploy Data Mesh Manager as WebApp, together with a Postgres database in a virtual network.
+You need to provide SMTP server configuration.
+
 
 ## Get help, reporting bugs and feature requests
 
