@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "13094569204602842496"
+      "templateHash": "6048669854085068547"
     }
   },
   "parameters": {
@@ -18,6 +18,7 @@
     },
     "webAppName": {
       "type": "string",
+      "defaultValue": "[format('datameshmanager-{0}', resourceGroup().name)]",
       "metadata": {
         "description": "The name of the web app. This will also be used for the default domain name ${webAppName}.azurewebsites.net, so it must be unique."
       }
@@ -47,15 +48,15 @@
       }
     },
     "smtpBasicAuth": {
-      "type": "string",
-      "defaultValue": "true",
+      "type": "bool",
+      "defaultValue": true,
       "metadata": {
         "description": "Use basic authentication for SMTP"
       }
     },
     "smtpStarttls": {
-      "type": "string",
-      "defaultValue": "true",
+      "type": "bool",
+      "defaultValue": true,
       "metadata": {
         "description": "Ensure that TLS is used"
       }
@@ -161,61 +162,6 @@
   },
   "resources": [
     {
-      "type": "Microsoft.DBforPostgreSQL/flexibleServers",
-      "apiVersion": "2023-12-01-preview",
-      "name": "[parameters('postgresServerName')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "[parameters('postgresComputeTierSizeSku')]",
-        "tier": "GeneralPurpose"
-      },
-      "properties": {
-        "version": "14",
-        "replica": {
-          "role": "Primary"
-        },
-        "storage": {
-          "iops": 500,
-          "tier": "P10",
-          "storageSizeGB": "[parameters('postgresStorageSizeGB')]",
-          "autoGrow": "Enabled"
-        },
-        "network": {
-          "publicNetworkAccess": "Disabled",
-          "delegatedSubnetResourceId": "[format('{0}/subnets/{1}', resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName')), parameters('postgresSubnetName'))]",
-          "privateDnsZoneArmResourceId": "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.postgres.database.azure.com')]"
-        },
-        "dataEncryption": {
-          "type": "SystemManaged"
-        },
-        "authConfig": {
-          "activeDirectoryAuth": "Disabled",
-          "passwordAuth": "Enabled"
-        },
-        "administratorLogin": "[parameters('postgresAdminUsername')]",
-        "administratorLoginPassword": "[parameters('postgresAdminPassword')]",
-        "availabilityZone": "3",
-        "backup": {
-          "backupRetentionDays": 7,
-          "geoRedundantBackup": "Disabled"
-        },
-        "highAvailability": {
-          "mode": "Disabled"
-        },
-        "maintenanceWindow": {
-          "customWindow": "Disabled",
-          "dayOfWeek": 0,
-          "startHour": 0,
-          "startMinute": 0
-        },
-        "replicationRole": "Primary"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.postgres.database.azure.com')]",
-        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
-      ]
-    },
-    {
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2020-12-01",
       "name": "[format('{0}-plan', parameters('webAppName'))]",
@@ -299,11 +245,11 @@
             },
             {
               "name": "SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH",
-              "value": "[parameters('smtpBasicAuth')]"
+              "value": "[format('{0}', parameters('smtpBasicAuth'))]"
             },
             {
               "name": "SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE",
-              "value": "[parameters('smtpStarttls')]"
+              "value": "[format('{0}', parameters('smtpStarttls'))]"
             }
           ],
           "linuxFxVersion": "[format('DOCKER|index.docker.io/{0}', parameters('containerImageUrl'))]",
@@ -318,6 +264,61 @@
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', format('{0}-plan', parameters('webAppName')))]",
         "[resourceId('Microsoft.DBforPostgreSQL/flexibleServers', parameters('postgresServerName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DBforPostgreSQL/flexibleServers",
+      "apiVersion": "2023-12-01-preview",
+      "name": "[parameters('postgresServerName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('postgresComputeTierSizeSku')]",
+        "tier": "GeneralPurpose"
+      },
+      "properties": {
+        "version": "14",
+        "replica": {
+          "role": "Primary"
+        },
+        "storage": {
+          "iops": 500,
+          "tier": "P10",
+          "storageSizeGB": "[parameters('postgresStorageSizeGB')]",
+          "autoGrow": "Enabled"
+        },
+        "network": {
+          "publicNetworkAccess": "Disabled",
+          "delegatedSubnetResourceId": "[format('{0}/subnets/{1}', resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName')), parameters('postgresSubnetName'))]",
+          "privateDnsZoneArmResourceId": "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.postgres.database.azure.com')]"
+        },
+        "dataEncryption": {
+          "type": "SystemManaged"
+        },
+        "authConfig": {
+          "activeDirectoryAuth": "Disabled",
+          "passwordAuth": "Enabled"
+        },
+        "administratorLogin": "[parameters('postgresAdminUsername')]",
+        "administratorLoginPassword": "[parameters('postgresAdminPassword')]",
+        "availabilityZone": "3",
+        "backup": {
+          "backupRetentionDays": 7,
+          "geoRedundantBackup": "Disabled"
+        },
+        "highAvailability": {
+          "mode": "Disabled"
+        },
+        "maintenanceWindow": {
+          "customWindow": "Disabled",
+          "dayOfWeek": 0,
+          "startHour": 0,
+          "startMinute": 0
+        },
+        "replicationRole": "Primary"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.postgres.database.azure.com')]",
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
       ]
     },

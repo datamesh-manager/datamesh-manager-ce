@@ -2,7 +2,7 @@
 param location string = resourceGroup().location
 
 @description('The name of the web app. This will also be used for the default domain name \${webAppName}.azurewebsites.net, so it must be unique.')
-param webAppName string
+param webAppName string = 'datameshmanager-${resourceGroup().name}'
 
 @description('SMTP server host')
 param smtpHost string
@@ -18,10 +18,10 @@ param smtpUsername string
 param smtpPassword string
 
 @description('Use basic authentication for SMTP')
-param smtpBasicAuth string = 'true'
+param smtpBasicAuth bool = true
 
 @description('Ensure that TLS is used')
-param smtpStarttls string = 'true'
+param smtpStarttls bool = true
 
 @description('The Docker container image URL.')
 param containerImageUrl string = 'datameshmanager/datamesh-manager-ce:latest'
@@ -68,57 +68,6 @@ param postgresSubnetName string = 'postgres-subnet'
 @description('The address prefix for the PostgreSQL subnet.')
 param postgresSubnetAddressPrefix string = '10.0.2.0/24'
 
-
-
-resource postgres 'Microsoft.DBforPostgreSQL/flexibleServers@2023-12-01-preview' = {
-  name: postgresServerName
-  location: location
-  sku: {
-    name: postgresComputeTierSizeSku
-    tier: 'GeneralPurpose'
-  }
-  properties: {
-    version: '14'
-    replica: {
-      role: 'Primary'
-    }
-    storage: {
-      iops: 500
-      tier: 'P10'
-      storageSizeGB: postgresStorageSizeGB
-      autoGrow: 'Enabled'
-    }
-    network: {
-      publicNetworkAccess: 'Disabled'
-      delegatedSubnetResourceId: '${vnet.id}/subnets/${postgresSubnetName}'
-      privateDnsZoneArmResourceId: privateDnsZones_privatelink_postgres.id
-    }
-    dataEncryption: {
-      type: 'SystemManaged'
-    }
-    authConfig: {
-      activeDirectoryAuth: 'Disabled'
-      passwordAuth: 'Enabled'
-    }
-    administratorLogin: postgresAdminUsername
-    administratorLoginPassword: postgresAdminPassword
-    availabilityZone: '3'
-    backup: {
-      backupRetentionDays: 7
-      geoRedundantBackup: 'Disabled'
-    }
-    highAvailability: {
-      mode: 'Disabled'
-    }
-    maintenanceWindow: {
-      customWindow: 'Disabled'
-      dayOfWeek: 0
-      startHour: 0
-      startMinute: 0
-    }
-    replicationRole: 'Primary'
-  }
-}
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: '${webAppName}-plan'
@@ -202,11 +151,11 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
         }
         {
           name: 'SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH'
-          value: smtpBasicAuth
+          value: '${smtpBasicAuth}'
         }
         {
           name: 'SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE'
-          value: smtpStarttls
+          value: '${smtpStarttls}'
         }
       ]
       linuxFxVersion: 'DOCKER|index.docker.io/${containerImageUrl}'
@@ -219,6 +168,57 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
     httpsOnly: true
   }
 }
+
+resource postgres 'Microsoft.DBforPostgreSQL/flexibleServers@2023-12-01-preview' = {
+  name: postgresServerName
+  location: location
+  sku: {
+    name: postgresComputeTierSizeSku
+    tier: 'GeneralPurpose'
+  }
+  properties: {
+    version: '14'
+    replica: {
+      role: 'Primary'
+    }
+    storage: {
+      iops: 500
+      tier: 'P10'
+      storageSizeGB: postgresStorageSizeGB
+      autoGrow: 'Enabled'
+    }
+    network: {
+      publicNetworkAccess: 'Disabled'
+      delegatedSubnetResourceId: '${vnet.id}/subnets/${postgresSubnetName}'
+      privateDnsZoneArmResourceId: privateDnsZones_privatelink_postgres.id
+    }
+    dataEncryption: {
+      type: 'SystemManaged'
+    }
+    authConfig: {
+      activeDirectoryAuth: 'Disabled'
+      passwordAuth: 'Enabled'
+    }
+    administratorLogin: postgresAdminUsername
+    administratorLoginPassword: postgresAdminPassword
+    availabilityZone: '3'
+    backup: {
+      backupRetentionDays: 7
+      geoRedundantBackup: 'Disabled'
+    }
+    highAvailability: {
+      mode: 'Disabled'
+    }
+    maintenanceWindow: {
+      customWindow: 'Disabled'
+      dayOfWeek: 0
+      startHour: 0
+      startMinute: 0
+    }
+    replicationRole: 'Primary'
+  }
+}
+
 
 resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
   name: vnetName
