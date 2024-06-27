@@ -1,5 +1,7 @@
 # Data Mesh Manager (Community Edition)
 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdatamesh-manager%2Fdatamesh-manager-ce%2Fmain%2Fazure%2Fdatamesh-manager-ce.json)
+
 Data Mesh Manager (Community Edition) is a free version of the [Data Mesh Manager](https://www.datamesh-manager.com) that you can host yourself.
 
 In the Community Edition, every user can change any data product or data contract.  
@@ -16,7 +18,7 @@ Play with our [demo app](https://demo.datamesh-manager.com/)!
 
 Data Mesh Manager (Community Edition) is available as Docker image `datameshmanager/datamesh-manager-ce` on [Docker Hub](https://hub.docker.com/r/datameshmanager/datamesh-manager-ce).
 
-Start Data Mesh Manager (Community Edition) locally with Docker Compose:
+[Deploy to Azure](azure/) or start Data Mesh Manager (Community Edition) locally with Docker Compose:
 
 ```bash
 git clone https://github.com/datamesh-manager/datamesh-manager-ce.git
