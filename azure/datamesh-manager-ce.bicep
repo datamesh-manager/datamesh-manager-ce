@@ -123,7 +123,7 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
         }
         {
           name: 'DATAMESHMANAGER_HOST'
-          value: '\${WEBSITE_HOSTNAME}'
+          value: 'https://\${WEBSITE_HOSTNAME}'
         }
         {
           name: 'SPRING_DATASOURCE_URL'
