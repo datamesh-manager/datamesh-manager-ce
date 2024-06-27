@@ -23,6 +23,10 @@ param smtpBasicAuth bool = true
 @description('Ensure that TLS is used')
 param smtpStarttls bool = true
 
+@minLength(3)
+@description('The sender email address for data mesh manager emails. For many email providers, such as SendGrid, that must be a verified email address.')
+param mailFrom string = 'hello@datamesh-manager.com'
+
 @description('The Docker container image URL.')
 param containerImageUrl string = 'datameshmanager/datamesh-manager-ce:latest'
 
@@ -38,7 +42,7 @@ param postgresComputeTierSizeSku string = 'Standard_D2s_v3'
 param postgresStorageSizeGB int = 128
 
 @description('The name of the PostgreSQL server.')
-param postgresServerName string = 'datameshmanager-postgres'
+param postgresServerName string = 'datameshmanager-postgres-${resourceGroup().name}'
 
 @description('The administrator username of the PostgreSQL server.')
 param postgresAdminUsername string = 'adminuser'
@@ -151,11 +155,15 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
         }
         {
           name: 'SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH'
-          value: '${smtpBasicAuth}'
+          value: toLower(string(smtpBasicAuth))
         }
         {
           name: 'SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE'
-          value: '${smtpStarttls}'
+          value: toLower(string(smtpStarttls))
+        }
+        {
+          name: 'DATAMESHMANAGER_MAIL_FROM'
+          value: mailFrom
         }
       ]
       linuxFxVersion: 'DOCKER|index.docker.io/${containerImageUrl}'

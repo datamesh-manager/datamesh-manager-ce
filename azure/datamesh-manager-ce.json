@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "6048669854085068547"
+      "templateHash": "12688310485767431180"
     }
   },
   "parameters": {
@@ -61,6 +61,14 @@
         "description": "Ensure that TLS is used"
       }
     },
+    "mailFrom": {
+      "type": "string",
+      "defaultValue": "hello@datamesh-manager.com",
+      "minLength": 3,
+      "metadata": {
+        "description": "The sender email address for data mesh manager emails. For many email providers, such as SendGrid, that must be a verified email address."
+      }
+    },
     "containerImageUrl": {
       "type": "string",
       "defaultValue": "datameshmanager/datamesh-manager-ce:latest",
@@ -91,7 +99,7 @@
     },
     "postgresServerName": {
       "type": "string",
-      "defaultValue": "datameshmanager-postgres",
+      "defaultValue": "[format('datameshmanager-postgres-{0}', resourceGroup().name)]",
       "metadata": {
         "description": "The name of the PostgreSQL server."
       }
@@ -245,11 +253,15 @@
             },
             {
               "name": "SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH",
-              "value": "[format('{0}', parameters('smtpBasicAuth'))]"
+              "value": "[toLower(string(parameters('smtpBasicAuth')))]"
             },
             {
               "name": "SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE",
-              "value": "[format('{0}', parameters('smtpStarttls'))]"
+              "value": "[toLower(string(parameters('smtpStarttls')))]"
+            },
+            {
+              "name": "DATAMESHMANAGER_MAIL_FROM",
+              "value": "[parameters('mailFrom')]"
             }
           ],
           "linuxFxVersion": "[format('DOCKER|index.docker.io/{0}', parameters('containerImageUrl'))]",
