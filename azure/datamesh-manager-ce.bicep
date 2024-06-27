@@ -4,16 +4,16 @@ param location string = resourceGroup().location
 @description('The name of the web app. This will also be used for the default domain name \${webAppName}.azurewebsites.net, so it must be unique.')
 param webAppName string = 'datameshmanager-${resourceGroup().name}'
 
-@description('SMTP server host')
-param smtpHost string
+@description('SMTP server host. You can use SendGrid or any other SMTP server.')
+param smtpHost string = 'smtp.sendgrid.net'
 
 @description('SMTP server port')
-param smtpPort string
+param smtpPort string = '587'
 
 @description('Login user of the SMTP server')
-param smtpUsername string
+param smtpUsername string = 'apikey'
 
-@description('Login password of the SMTP server')
+@description('Login password of the SMTP server. If you use SendGrid, this is your API Key.')
 @secure()
 param smtpPassword string
 
@@ -24,7 +24,7 @@ param smtpBasicAuth bool = true
 param smtpStarttls bool = true
 
 @minLength(3)
-@description('The sender email address for data mesh manager emails. For many email providers, such as SendGrid, that must be a verified email address.')
+@description('The sender email address for data mesh manager emails. For many email providers, such as SendGrid, that must be a verified sender email address.')
 param mailFrom string = 'hello@datamesh-manager.com'
 
 @description('The Docker container image URL.')

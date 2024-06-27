@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "12688310485767431180"
+      "templateHash": "2857996257403485838"
     }
   },
   "parameters": {
@@ -25,18 +25,21 @@
     },
     "smtpHost": {
       "type": "string",
+      "defaultValue": "smtp.sendgrid.net",
       "metadata": {
-        "description": "SMTP server host"
+        "description": "SMTP server host. You can use SendGrid or any other SMTP server."
       }
     },
     "smtpPort": {
       "type": "string",
+      "defaultValue": "587",
       "metadata": {
         "description": "SMTP server port"
       }
     },
     "smtpUsername": {
       "type": "string",
+      "defaultValue": "apikey",
       "metadata": {
         "description": "Login user of the SMTP server"
       }
@@ -44,7 +47,7 @@
     "smtpPassword": {
       "type": "securestring",
       "metadata": {
-        "description": "Login password of the SMTP server"
+        "description": "Login password of the SMTP server. If you use SendGrid, this is your API Key."
       }
     },
     "smtpBasicAuth": {
@@ -66,7 +69,7 @@
       "defaultValue": "hello@datamesh-manager.com",
       "minLength": 3,
       "metadata": {
-        "description": "The sender email address for data mesh manager emails. For many email providers, such as SendGrid, that must be a verified email address."
+        "description": "The sender email address for data mesh manager emails. For many email providers, such as SendGrid, that must be a verified sender email address."
       }
     },
     "containerImageUrl": {
