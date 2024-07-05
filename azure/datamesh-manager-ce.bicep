@@ -122,7 +122,7 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
           value: '8080'
         }
         {
-          name: 'DATAMESHMANAGER_HOST'
+          name: 'APPLICATION_HOST_WEB'
           value: 'https://\${WEBSITE_HOSTNAME}'
         }
         {
@@ -162,7 +162,7 @@ resource webApp 'Microsoft.Web/sites@2023-12-01' = {
           value: toLower(string(smtpStarttls))
         }
         {
-          name: 'DATAMESHMANAGER_MAIL_FROM'
+          name: 'APPLICATION_MAIL_FROM'
           value: mailFrom
         }
       ]

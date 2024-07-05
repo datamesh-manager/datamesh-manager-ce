@@ -34,19 +34,19 @@ Now you can access the Data Mesh Manager (Community Edition) at [http://localhos
 
 Configure an external database and mail server for production use.
 
-| Environment Variable       | Example                                  | Description                                                                                                                                                            |
-| -------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| DATAMESHMANAGER_HOST      | `http://localhost:8081` | The host of the application, used e.g., in email templates build URLs to Data Mesh Manager.                                                                                                                                              |
-| SPRING_DATASOURCE_URL      | `jdbc:postgresql://postgres:5432/postgres` | JDBC URL of the database                                                                                                                                              |
-| SPRING_DATASOURCE_USERNAME | `postgres`                                 | Login username of the database                                                                                                                                        |
-| SPRING_DATASOURCE_PASSWORD | `postgres`                                 | Login password of the database                                                                                                                                |
-| SPRING_MAIL_HOST           | `smtp.example.com`                         | SMTP server host                                                                                                                                                       |
-| SPRING_MAIL_PORT           | `587`                                      | SMTP server port                                                                                                                                                     |
-| SPRING_MAIL_USERNAME       |                                          | Login user of the SMTP server |
-| SPRING_MAIL_PASSWORD       |                                          | Login password of the SMTP server                                                                                                                             |
-| SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH | `true` | Use basic authentication for SMTP |
-| SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE | `true` | Ensure that TLS is used |
-| DATAMESHMANAGER_MAIL_FROM      | `Data Mesh Manager <noreply@example.com>` | The sender email address for data mesh manager emails.                                                                                                                                              |
+| Environment Variable                             | Example                                    | Description                                                                                 |
+|--------------------------------------------------|--------------------------------------------|---------------------------------------------------------------------------------------------|
+| APPLICATION_HOST_WEB                             | `http://localhost:8081`                    | The host of the application, used e.g., in email templates build URLs to Data Mesh Manager. |
+| APPLICATION_MAIL_FROM                            | `Data Mesh Manager <noreply@example.com>`  | The sender email address for data mesh manager emails.                                      |
+| SPRING_DATASOURCE_URL                            | `jdbc:postgresql://postgres:5432/postgres` | JDBC URL of the database                                                                    |
+| SPRING_DATASOURCE_USERNAME                       | `postgres`                                 | Login username of the database                                                              |
+| SPRING_DATASOURCE_PASSWORD                       | `postgres`                                 | Login password of the database                                                              |
+| SPRING_MAIL_HOST                                 | `smtp.example.com`                         | SMTP server host                                                                            |
+| SPRING_MAIL_PORT                                 | `587`                                      | SMTP server port                                                                            |
+| SPRING_MAIL_USERNAME                             |                                            | Login user of the SMTP server                                                               |
+| SPRING_MAIL_PASSWORD                             |                                            | Login password of the SMTP server                                                           |
+| SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH            | `true`                                     | Use basic authentication for SMTP                                                           |
+| SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE | `true`                                     | Ensure that TLS is used                                                                     |
 
 ## Deploy on Azure
 
