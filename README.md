@@ -30,6 +30,15 @@ Now you can access the Data Mesh Manager (Community Edition) at [http://localhos
 
 > **_NOTE:_**  The Docker Compose configuration uses a dummy mail server, so no mails are actually sent. Configure our SMTP host accordingly as environment variables.
 
+
+## Requirements
+
+- Docker Resources: 1 CPU and 1 GB of RAM, more is better
+- PostgreSQL version 14 or newer
+- PostgreSQL with the extensions available: `vector`, `hstore`, `uuid-ossp`
+- SMTP server for transactional emails, such as SendGrid, AWS SES, Azure Communication Services email (Office 365 / Exchange is not recommended, as [SMTP Basic Auth is deprecated](https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/deprecation-of-basic-authentication-exchange-online))
+
+
 ## Configuration
 
 Configure an external database and mail server for production use.
