@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "15948715680116162486"
+      "templateHash": "12522166884813929951"
     }
   },
   "parameters": {
@@ -292,7 +292,7 @@
         "tier": "GeneralPurpose"
       },
       "properties": {
-        "version": "14",
+        "version": "16",
         "replica": {
           "role": "Primary"
         },
@@ -335,6 +335,18 @@
       "dependsOn": [
         "[resourceId('Microsoft.Network/privateDnsZones', 'privatelink.postgres.database.azure.com')]",
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DBforPostgreSQL/flexibleServers/configurations",
+      "apiVersion": "2023-12-01-preview",
+      "name": "[format('{0}/{1}', parameters('postgresServerName'), 'azure.extensions')]",
+      "properties": {
+        "value": "VECTOR,UUID-OSSP,HSTORE",
+        "source": "user-override"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DBforPostgreSQL/flexibleServers', parameters('postgresServerName'))]"
       ]
     },
     {

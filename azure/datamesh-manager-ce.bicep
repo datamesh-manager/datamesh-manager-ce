@@ -185,7 +185,7 @@ resource postgres 'Microsoft.DBforPostgreSQL/flexibleServers@2023-12-01-preview'
     tier: 'GeneralPurpose'
   }
   properties: {
-    version: '14'
+    version: '16'
     replica: {
       role: 'Primary'
     }
@@ -227,6 +227,14 @@ resource postgres 'Microsoft.DBforPostgreSQL/flexibleServers@2023-12-01-preview'
   }
 }
 
+resource postgres_extensions 'Microsoft.DBforPostgreSQL/flexibleServers/configurations@2023-12-01-preview' = {
+  parent: postgres
+  name: 'azure.extensions'
+  properties: {
+    value: 'VECTOR,UUID-OSSP,HSTORE'
+    source: 'user-override'
+  }
+}
 
 resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
   name: vnetName
