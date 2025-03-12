@@ -20,6 +20,8 @@ Because of that, the CloudFormation template uses `public.ecr.aws/z3b7c0x3/datam
 
 ## Testing the CloudFormation Template
 
+This is done automatically via GitHub Actions to ensure that the cloud formation template still works.
+
 ### Installation of Taskcat
 
 ```bash
