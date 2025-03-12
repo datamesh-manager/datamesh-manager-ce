@@ -27,6 +27,6 @@ jobs:
           aws-region: us-east-1
 
       - name: Run TaskCat
-        runs: |
+        run: |
           pip install taskcat
           taskcat test run --project-root aws/
