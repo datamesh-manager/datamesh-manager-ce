@@ -12,10 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -25,8 +27,6 @@ jobs:
           aws-region: us-east-1
 
       - name: Run TaskCat
-        uses: ShahradR/action-taskcat@v1
-        with:
-          commands: test run -p ./aws
-          update_taskcat: true
-          update_cfn_lint: true
+        runs: |
+          pip install taskcat
+          taskcat test run --project-root aws/
