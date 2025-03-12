@@ -1,10 +1,10 @@
 # AWS CloudFormation Template
 
-The cloud formation template for the AWS infrastructure is available in `template.yaml`.
+The cloud formation template for the AWS infrastructure is available in `template.yaml` and in a public S3 bucket: https://datamesh-manager-ce.s3.us-east-1.amazonaws.com/template.yaml.
 
 It uses the Docker Image hosted on AWS Public ECR: `public.ecr.aws/z3b7c0x3/datamesh-manager-ce:latest` (see more on https://gallery.ecr.aws/z3b7c0x3/datamesh-manager-ce).
 
-[Quick-Create Link](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?templateURL=https://raw.githubusercontent.com/datamesh-manager/datamesh-manager-ce/refs/heads/main/aws/template.yaml)
+[Quick-Create Link](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?templateURL=https://datamesh-manager-ce.s3.us-east-1.amazonaws.com/template.yaml)
 
 ## Constraints
 
