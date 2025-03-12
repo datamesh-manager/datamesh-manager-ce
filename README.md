@@ -1,6 +1,6 @@
 # Data Mesh Manager (Community Edition)
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdatamesh-manager%2Fdatamesh-manager-ce%2Fmain%2Fazure%2Fdatamesh-manager-ce.json) [![Deploy to AWS](images/deploytoaws.png)](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?templateURL=https://datamesh-manager-ce.s3.us-east-1.amazonaws.com/template.yaml)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdatamesh-manager%2Fdatamesh-manager-ce%2Fmain%2Fazure%2Fdatamesh-manager-ce.json) [![Deploy to AWS](images/deploytoaws.svg)](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?templateURL=https://datamesh-manager-ce.s3.us-east-1.amazonaws.com/template.yaml)
 
 Data Mesh Manager (Community Edition) is a free version of the [Data Mesh Manager](https://www.datamesh-manager.com) that you can host yourself.
 
