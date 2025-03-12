@@ -1,0 +1,38 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'aws/**'
+
+jobs:
+  taskcat:
+    name: Execute TaskCat Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Run TaskCat
+        uses: ShahradR/action-taskcat@v1
+        with:
+          commands: test run -p ./aws
+          update_taskcat: true
+          update_cfn_lint: true
+
+      - name: Upload TaskCat Outputs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: taskcat_outputs
+          path: ${{ github.workspace }}/taskcat_outputs/
