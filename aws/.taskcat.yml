@@ -1,0 +1,8 @@
+project:
+  name: datamesh-manager-ce-test
+  package_lambda: false
+  regions:
+    - eu-central-1
+tests:
+  default:
+    template: ./template.yaml

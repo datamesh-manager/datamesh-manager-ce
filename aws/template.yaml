@@ -1,0 +1,163 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudFormation template to provision an Amazon RDS PostgreSQL database and an AWS App Runner service'
+
+Parameters:
+  DBInstanceIdentifier:
+    Type: String
+    Default: datamesh-manager-postgres
+    Description: 'Database instance identifier'
+  DBName:
+    Type: String
+    Default: mydatabase
+    Description: 'Initial database name'
+  DBUsername:
+    Type: String
+    Default: myusername
+    NoEcho: true
+    Description: 'Master database username'
+  DBPassword:
+    Type: String
+    Default: mypassword
+    NoEcho: true
+    Description: 'Master database password'
+  DBInstanceClass:
+    Type: String
+    Default: db.t3.micro
+    Description: 'Database instance class'
+  SuperAdmins:
+    Type: String
+    Default: 'mail@example.com'
+    Description: 'Super admins can do anything in Data Mesh Manager'
+  AllocatedStorage:
+    Type: Number
+    Default: "20"
+    Description: 'Allocated storage in GB'
+  AppRunnerServiceName:
+    Type: String
+    Default: datamesh-manager-app-runner-service
+    Description: 'App Runner service name'
+
+Resources:
+
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select [ 0, !GetAZs "" ]
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: 10.0.2.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select [ 1, !GetAZs "" ]
+
+  RDSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Security group for RDS instance'
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          CidrIp: 0.0.0.0/0
+
+  AppRunnerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Security group for App Runner"
+      VpcId: !Ref MyVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 8080
+          CidrIp: 0.0.0.0/0 # Allow public access
+
+  MyVpcConnector:
+    Type: AWS::AppRunner::VpcConnector
+    Properties:
+      Subnets:
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
+      SecurityGroups:
+        - !Ref AppRunnerSecurityGroup
+
+  MyDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: "Subnet group for RDS"
+      SubnetIds:
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
+
+  RDSInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: !Ref DBInstanceIdentifier
+      DBName: !Ref DBName
+      Engine: postgres
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Ref DBPassword
+      DBInstanceClass: !Ref DBInstanceClass
+      AllocatedStorage: !Ref AllocatedStorage
+      PubliclyAccessible: false
+      VPCSecurityGroups:
+        - !GetAtt RDSSecurityGroup.GroupId
+      DBSubnetGroupName: !Ref MyDBSubnetGroup
+      BackupRetentionPeriod: 7
+      StorageType: gp2
+      MultiAZ: false
+      DeletionProtection: false
+
+  AppRunnerService:
+    Type: AWS::AppRunner::Service
+    Properties:
+      ServiceName: !Ref AppRunnerServiceName
+      SourceConfiguration:
+        ImageRepository:
+          ImageIdentifier: public.ecr.aws/z3b7c0x3/datamesh-manager-ce:latest
+          ImageRepositoryType: 'ECR_PUBLIC'
+          ImageConfiguration:
+            RuntimeEnvironmentVariables:
+              - Name: APPLICATION_SUPERADMINS
+                Value: !Ref SuperAdmins
+              - Name: SPRING_DATASOURCE_URL
+                Value: !Sub 'jdbc:postgresql://${RDSInstance.Endpoint.Address}:5432/${DBName}'
+              - Name: SPRING_DATASOURCE_USERNAME
+                Value: !Ref DBUsername
+              - Name: SPRING_DATASOURCE_PASSWORD
+                Value: !Ref DBPassword
+        AutoDeploymentsEnabled: false
+      InstanceConfiguration:
+        Cpu: '1024'
+        Memory: '2048'
+      HealthCheckConfiguration:
+        Path: '/'
+        Interval: 10
+        Timeout: 5
+        HealthyThreshold: 5
+        UnhealthyThreshold: 2
+      NetworkConfiguration:
+        EgressConfiguration:
+          EgressType: "VPC"
+          VpcConnectorArn: !Ref MyVpcConnector
+
+
+Outputs:
+  RDSInstanceEndpoint:
+    Description: 'RDS Instance Endpoint'
+    Value: !GetAtt RDSInstance.Endpoint.Address
+  AppRunnerServiceURL:
+    Description: 'URL of the App Runner Service'
+    Value: !GetAtt AppRunnerService.ServiceUrl

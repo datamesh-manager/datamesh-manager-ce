@@ -1,0 +1,4 @@
+venv/
+.idea/
+.aws/
+taskcat_outputs/
