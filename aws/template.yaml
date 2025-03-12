@@ -36,6 +36,23 @@ Parameters:
     Type: String
     Default: datamesh-manager-app-runner-service
     Description: 'App Runner service name'
+  SMTPHost:
+    Type: String
+    Default: 'smtp.example.com'
+    Description: 'SMTP server host'
+  SMTPPort:
+    Type: Number
+    Default: "587"
+    Description: 'SMTP server port'
+  SMTPUsername:
+    Type: String
+    Default: 'apikey'
+    Description: 'SMTP server username'
+  SMTPPassword:
+    Type: String
+    Default: ''
+    NoEcho: true
+    Description: 'SMTP server password'
 
 Resources:
 
@@ -138,6 +155,14 @@ Resources:
                 Value: !Ref DBUsername
               - Name: SPRING_DATASOURCE_PASSWORD
                 Value: !Ref DBPassword
+              - Name: SPRING_MAIL_HOST
+                Value: !Ref SMTPHost
+              - Name: SPRING_MAIL_PORT
+                Value: !Ref SMTPPort
+              - Name: SPRING_MAIL_USERNAME
+                Value: !Ref SMTPUsername
+              - Name: SPRING_MAIL_PASSWORD
+                Value: !Ref SMTPPassword
         AutoDeploymentsEnabled: false
       InstanceConfiguration:
         Cpu: '1024'
