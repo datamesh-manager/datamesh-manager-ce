@@ -63,6 +63,10 @@ Parameters:
     Default: "true"
     Description: 'Use STARTTLS for SMTP server'
     AllowedValues: [ true, false ]
+  MailFrom:
+    Type: String
+    Default: 'support@example.com'
+    Description: 'Email address to send emails from'
 
 Resources:
 
@@ -177,6 +181,8 @@ Resources:
                 Value: !Ref SMTPBasicAuth
               - Name: SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE
                 Value: !Ref SMTPStartTLS
+              - Name: APPLICATION_MAIL_FROM
+                Value: !Ref MailFrom
         AutoDeploymentsEnabled: false
       InstanceConfiguration:
         Cpu: '1024'
