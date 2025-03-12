@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'CloudFormation template to provision an Amazon RDS PostgreSQL database and an AWS App Runner service'
+Description: 'CloudFormation template to provision the Data Mesh Manager on AWS App Runner with an Amazon RDS PostgreSQL database'
 
 Parameters:
   DBInstanceIdentifier:
