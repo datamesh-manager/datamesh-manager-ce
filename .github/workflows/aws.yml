@@ -28,6 +28,7 @@ jobs:
 
       - name: Install TaskCat
         run: |
+          pip install --upgrade pip
           pip install taskcat
 
       - name: Run TaskCat
