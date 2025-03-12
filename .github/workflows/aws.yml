@@ -26,7 +26,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Run TaskCat
+      - name: Install TaskCat
         run: |
           pip install taskcat
+
+      - name: Run TaskCat
+        run: |
           taskcat test run --project-root aws/
