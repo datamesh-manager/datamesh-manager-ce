@@ -53,6 +53,16 @@ Parameters:
     Default: ''
     NoEcho: true
     Description: 'SMTP server password'
+  SMTPBasicAuth:
+    Type: String
+    Default: "true"
+    Description: 'Use basic authentication for SMTP server'
+    AllowedValues: [ true, false ]
+  SMTPStartTLS:
+    Type: String
+    Default: "true"
+    Description: 'Use STARTTLS for SMTP server'
+    AllowedValues: [ true, false ]
 
 Resources:
 
@@ -163,6 +173,10 @@ Resources:
                 Value: !Ref SMTPUsername
               - Name: SPRING_MAIL_PASSWORD
                 Value: !Ref SMTPPassword
+              - Name: SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH
+                Value: !Ref SMTPBasicAuth
+              - Name: SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE
+                Value: !Ref SMTPStartTLS
         AutoDeploymentsEnabled: false
       InstanceConfiguration:
         Cpu: '1024'
