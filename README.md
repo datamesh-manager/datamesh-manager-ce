@@ -66,7 +66,7 @@ You need to provide SMTP server configuration.
 
 ## Deploy on AWS
 
-[![Deploy to AWS](images/deploytoaws.png)](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?templateURL=https://datamesh-manager-ce.s3.us-east-1.amazonaws.com/template.yaml)
+[![Deploy to AWS](images/deploytoaws.svg)](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?templateURL=https://datamesh-manager-ce.s3.us-east-1.amazonaws.com/template.yaml)
 
 Use the AWS Cloud Formation [template](aws/template.yaml) to deploy Data Mesh Manager as AppRunner, together with a Postgres database in a virtual network.
 
