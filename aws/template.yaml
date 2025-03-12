@@ -55,12 +55,12 @@ Parameters:
     Description: 'SMTP server password'
   SMTPBasicAuth:
     Type: String
-    Default: "true"
+    Default: true
     Description: 'Use basic authentication for SMTP server'
     AllowedValues: [ true, false ]
   SMTPStartTLS:
     Type: String
-    Default: "true"
+    Default: true
     Description: 'Use STARTTLS for SMTP server'
     AllowedValues: [ true, false ]
   MailFrom:
