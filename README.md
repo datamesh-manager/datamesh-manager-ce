@@ -18,7 +18,7 @@ Play with our [demo app](https://demo.datamesh-manager.com/)!
 
 Data Mesh Manager (Community Edition) is available as Docker image `datameshmanager/datamesh-manager-ce` on [Docker Hub](https://hub.docker.com/r/datameshmanager/datamesh-manager-ce).
 
-[Deploy to Azure](azure/) or start Data Mesh Manager (Community Edition) locally with Docker Compose:
+[Deploy to Azure](azure/), [Deploy to AWS](aws/) or start Data Mesh Manager (Community Edition) locally with Docker Compose:
 
 ```bash
 git clone https://github.com/datamesh-manager/datamesh-manager-ce.git
@@ -64,6 +64,11 @@ Configure an external database and mail server for production use.
 Use the Azure Resource Manager [template](azure/datamesh-manager-ce.json) to deploy Data Mesh Manager as WebApp, together with a Postgres database in a virtual network.
 You need to provide SMTP server configuration.
 
+## Deploy on AWS
+
+[Deploy to AWS](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?templateURL=https://datamesh-manager-ce.s3.us-east-1.amazonaws.com/template.yaml)
+
+Use the AWS Cloud Formation [template](aws/template.yaml) to deploy Data Mesh Manager as AppRunner, together with a Postgres database in a virtual network.
 
 ## Get help, reporting bugs and feature requests
 
