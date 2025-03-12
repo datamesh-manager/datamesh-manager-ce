@@ -29,10 +29,3 @@ jobs:
           commands: test run -p ./aws
           update_taskcat: true
           update_cfn_lint: true
-
-      - name: Upload TaskCat Outputs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: taskcat_outputs
-          path: ${{ github.workspace }}/taskcat_outputs/
