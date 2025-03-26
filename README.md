@@ -9,6 +9,13 @@ If you need advanced role and permission management, SSO, or customizations, con
 
 Community support is offered [in Slack in the channel #datamesh-manager](https://datacontract.com/slack).
 
+Supported Deployments:
+- Anywhere that can run a Docker image and offer a postgres database
+- [Locally via Docker Compose](https://github.com/datamesh-manager/datamesh-manager-ce/blob/main/docker-compose.yaml)
+- [On Kubernetes with Helm](https://github.com/datamesh-manager/datamesh-manager-helm)
+- [On AWS with Cloudformation](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/create/review?templateURL=https://datamesh-manager-ce.s3.us-east-1.amazonaws.com/template.yaml)
+- [On Azure with bicep template](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdatamesh-manager%2Fdatamesh-manager-ce%2Fmain%2Fazure%2Fdatamesh-manager-ce.json)
+
 ## Demo
 
 Play with our [demo app](https://demo.datamesh-manager.com/)!
